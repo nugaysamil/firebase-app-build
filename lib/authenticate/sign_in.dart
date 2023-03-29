@@ -1,5 +1,8 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers, dead_code
+
 import 'package:flutter/material.dart';
 import 'package:newfirebase2_flutter/services/auth.dart';
+import 'package:newfirebase2_flutter/shared/loading.dart';
 
 import '../shared/constant.dart';
 
@@ -15,7 +18,6 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
-    // ignore: no_leading_underscores_for_local_identifiers
     final AuthService _auth = AuthService();
     final _formKey = GlobalKey<FormState>();
     bool loading = false;
@@ -24,7 +26,7 @@ class _SignInState extends State<SignIn> {
     String password = '';
     String error = '';
 
-    return Scaffold(
+    return loading ?  const Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
@@ -81,14 +83,18 @@ class _SignInState extends State<SignIn> {
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
+                      setState(() {
+                        loading = true;
+                      });
+
                       dynamic result = await _auth.signInWithEmailAndPassword(
                           email, password);
-                      // ignore: unused_local_variable
 
                       if (result == null) {
                         setState(
                           () {
                             error = 'could not sign in with those credentials';
+                            loading = false;
                           },
                         );
                       }

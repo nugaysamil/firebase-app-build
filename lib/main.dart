@@ -1,14 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:newfirebase2_flutter/home/home.dart';
 import 'package:newfirebase2_flutter/home/wrapper.dart';
 import 'package:newfirebase2_flutter/services/auth.dart';
 
-import 'authenticate/sign_in.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +14,7 @@ void main() async {
   );
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -28,7 +26,6 @@ class MyApp extends StatelessWidget {
       child: const MaterialApp(
         home: Wrapper(),
       ),
-      
     );
   }
 }
