@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newfirebase2_flutter/home/settings_form.dart';
 import 'package:newfirebase2_flutter/services/auth.dart';
 import 'package:newfirebase2_flutter/services/database.dart';
 import 'package:provider/provider.dart';
@@ -14,9 +15,23 @@ class HomePage extends StatelessWidget {
     // ignore: no_leading_underscores_for_local_identifiers
     final AuthService _auth = AuthService();
 
+    void _showSettingPanel() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 20.0,
+                horizontal: 60,
+              ),
+              child: const SettingsForm(),
+            );
+          });
+    }
+
     return StreamProvider<List<Brew?>?>.value(
       value: DatabaseService().brews,
-      initialData: null,
+      initialData: List.empty(),
       child: Scaffold(
         backgroundColor: Colors.brown[50],
         appBar: AppBar(
@@ -29,6 +44,12 @@ class HomePage extends StatelessWidget {
                 await _auth.signOut();
               },
               child: const Text('logout'),
+            ),
+            TextButton(
+              onPressed: () {
+                _showSettingPanel();
+              },
+              child: const Text('Setting'),
             )
           ],
         ),
