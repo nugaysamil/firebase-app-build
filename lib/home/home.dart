@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:newfirebase2_flutter/home/settings_form.dart';
 import 'package:newfirebase2_flutter/services/auth.dart';
@@ -14,7 +15,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // ignore: no_leading_underscores_for_local_identifiers
     final AuthService _auth = AuthService();
-
     void _showSettingPanel() {
       showModalBottomSheet(
           context: context,
@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
     }
 
     return StreamProvider<List<Brew?>?>.value(
-      value: DatabaseService().brews,
+      value: DatabaseService(uid: '').brews,
       initialData: List.empty(),
       child: Scaffold(
         backgroundColor: Colors.brown[50],

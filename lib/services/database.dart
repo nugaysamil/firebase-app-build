@@ -17,7 +17,7 @@ class DatabaseService {
     return await brewCollection.doc(uid).set(
       {
         'name': name,
-        'strenght': strenght,
+        'strength': strenght,
         'sugars': sugars,
       },
     );
@@ -29,7 +29,7 @@ class DatabaseService {
         return Brew(
           name: doc.get("name") ?? "",
           sugars: doc.get("sugars") ?? "0",
-          strenght: doc.get("strenght") ?? 0,
+          strenght: doc.get("strength") ?? 0,
         );
       }).toList();
     } catch (e) {
@@ -38,19 +38,28 @@ class DatabaseService {
     }
   }
 
-  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+  UserData? _userdataFromSnapshots(DocumentSnapshot snapshot) {
+    Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>; // this is what i do
+
     return UserData(
-        uid,
-        snapshot.get('name'),
-        snapshot.get('sugars'),
-        snapshot.get('strength'));
+      uid: data['uid'], // this is what i do
+      name: data['name'], // this is what i do
+      sugars: data['sugars'], // this is what i do
+      strength: data['strength'], // this is what i do
+    );
   }
 
   Stream<List<Brew>> get brews {
     return brewCollection.snapshots().map(_brewListFromSnapshot);
   }
 
-  Stream<UserData> get userData {
-    return brewCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+  Stream<UserData?> get userData {
+    return brewCollection.doc(uid).snapshots().map(_userdataFromSnapshots);
   }
+
+  Stream<UserData> asdStream(String uidd) {
+    return brewCollection.doc(uidd).snapshots().map((event) => UserData.fromDocument(event));
+  }
+
+  
 }
