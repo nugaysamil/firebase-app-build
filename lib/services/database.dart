@@ -42,10 +42,10 @@ class DatabaseService {
     Map<String, dynamic> data = snapshot.data()! as Map<String, dynamic>; // this is what i do
 
     return UserData(
-      uid: data['uid'], // this is what i do
-      name: data['name'], // this is what i do
-      sugars: data['sugars'], // this is what i do
-      strength: data['strength'], // this is what i do
+      uid: data['uid'], 
+      name: data['name'], 
+      sugars: data['sugars'], 
+      strength: data['strength'], 
     );
   }
 

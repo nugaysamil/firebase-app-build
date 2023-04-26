@@ -102,9 +102,9 @@ class _SettingsFormState extends State<SettingsForm> {
           );
         }
         if (snapshot.hasError) {
-          return Text('hata');
+          return const Text('hata');
         }
-        return Loading();
+        return const Loading();
       },
     );
   }
